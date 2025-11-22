@@ -1,10 +1,12 @@
-#user name
+#Asking the user for their name and giving a welcome to the store
 user = input("What is your name? ")
 print(("\n" + f"Hello {user}! Welcome to EcoRide").upper().center(30))
 
+#Setting the price per minute for each bike type
 standard=100
 premium=200
 
+#Main menu with the available options
 while True: 
     print("\n" + "1. Bike hire")
     print("2. Rates")
@@ -14,17 +16,20 @@ while True:
     option=input("\n" + "Select an option: ")
 
     if option=="1":
-
+    #Asking wich bike the user wants 
         optionuser=input("\n" + "Which bike would you like? (standard/premium?) ").lower()
 
+        #Choosing the correct the price 
         if optionuser=="standard":
             bikevalue=standard
         elif optionuser=="premium":
             bikevalue=premium
         else:
-            print("\n" + "\33[31mSelect the correct option\33[0m")
+            #If the user writes something wrong
+            print("\n" + "\33[31mSelect the correct option\33[0m") 
             continue
 
+        #Here is the validation if the minutes are positive
         while True:
             try:
                 time=int(input("\n" + "Enter the value in minutes "))
@@ -34,22 +39,29 @@ while True:
                 else:
                     break
             except ValueError:
+                #Here if the user writes letters instead of numbers
                 print("\33[31mError\33[0m")
                 continue
 
+        #Calculation the base total
         total=bikevalue*time
 
+        #The payment options
         print("\n" + "Payment method")
         print("\n" + "Cash")
         print("Card")
         print("Points")
 
+        #Method of the user
         payment=input("\n" + "What is your payment method?: ").lower()
 
+        #Variables for discount, penalty, etc.
         descount=0
         forfeit=50
         backlong=0
 
+
+        #Applying th discount in different forms
         if time>60 and payment=="card":
             descount=total*0.10
         
@@ -66,9 +78,10 @@ while True:
         if penalty=="no":
             ticket=forfeit+total
 
-            
+        #Finally amount to pay including all conditions
         totally=total-descount+backlong+forfeit
 
+        #Print small summary table
         print("-" * 30 )
         print((f"You have to pay: \33[32m${totally}\33[0m").center(30))
         print("-" * 30 )
@@ -84,6 +97,7 @@ while True:
         print(f"| {'Total to Pay':15}| \33[32m${totally:<9,.0f}\33[0m|".replace(',', '.'))
         print("-" * 30  +"\n")
 
+    #Price description
     elif option=="2":
             print(("\n" + f"\33[32mStandard bike {standard} for minute\33[0m").upper().center(30))
             print("\n" + "-Ideal for short trips")
@@ -94,11 +108,13 @@ while True:
             print("\n" + "-Greater comfort, with advanced gear shifting")
             print("-Includes complete maintenance, insurance, and additional accessories")
 
+    #Check if the user select a bike
     elif option=="3":
         if optionuser is None:
             print("\n" + "You need first select the bike for pay")
             continue
 
+        #Summary before confirmation of the payment
         print("-" * 30 )
         print(("Calculation of the amount payable ").center(30))
         print("-" * 30  +"\n")
@@ -112,10 +128,12 @@ while True:
         print((f"Totality \33[32m${totally}\33[0m").center(30))
         print("-" * 30  +"\n")
 
+        #Ask abouth the user wants to finish the payment
         pay=input("\n" + "Would you like to proceed with the payment? yes/no ")
 
         if pay=="yes":
             print("\n" + "Payment made successfully, we hope you come back soon.")
+            #Resting values for a new rent
             optionuser=None
             total=None
             time=0
@@ -125,8 +143,10 @@ while True:
             print("\n" + "Review your request, otherwise the process will be canceled.")
 
     elif option == "4":
+        #End the questions
             print(("\33[34mThank you for visiting us.\33[0m").upper().center(30))
             break
     
     else:
+        #If the user chooses an invalid option
         print("\n" + "\33[31mInvalid option. Please try again.\33[0m")
